@@ -70,24 +70,24 @@ class App {
   suspend fun handler() {
     // ユーザーの情報を設定
     val id = UUID.randomUUID().toString()
-    val name = "ishida"
-    val age = 20
+    val name = ""
+    val age = 0
     val user = User(id, name, age)
 
     println("ユーザーを追加")
-    addUser(user)
+    // メソッド呼び出し
     println("追加完了\n")
 
     println("全件取得")
-    scanAll()
+    // メソッド呼び出し
     println("取得完了\n")
 
     println("id検索")
-    searchByKey(id, name)
+    // メソッド呼び出し
     println("検索完了\n")
 
     println("年齢で絞り込み")
-    searchByAge(age)
+    // メソッド呼び出し
     println("取得完了\n")
   }
 
@@ -95,12 +95,12 @@ class App {
     // 型変換
     val itemValues = utils.toAttributeValueMap(utils.toMap(user))
     // テーブル名とitemを指定
-    val req = PutItemRequest {
-      tableName = TABLE_NAME
-      item = itemValues
-    }
+    val req =
+        PutItemRequest {
+          // TODO: 実装
+        }
     // 追加
-    DynamoDbClient { region = REGION }.use { ddb -> ddb.putItem(req) }
+    // TODO: 実装
   }
 
   suspend fun scanAll() {
@@ -108,7 +108,7 @@ class App {
       // テーブル名を指定
       val request = ScanRequest { tableName = TABLE_NAME }
       // 全件取得
-      val response = ddb.scan(request)
+      val response = "TODO: 実装"
       // 取得結果を出力
       response.items?.forEach { item ->
         item.forEach { mp ->
@@ -122,8 +122,7 @@ class App {
   suspend fun searchByKey(id: String, name: String) {
     // idとnameをMapにセット
     val keys = mutableMapOf<String, Any>()
-    keys["id"] = id
-    keys["name"] = name
+    // TODO: 実装
 
     val keyToGet = utils.toAttributeValueMap(keys)
     // テーブル名とキーを設定
@@ -146,11 +145,10 @@ class App {
   suspend fun searchByAge(age: Int) {
     DynamoDbClient { region = REGION }.use { ddb ->
       // テーブル名, 検索条件を指定
-      val query = ScanRequest {
-        tableName = TABLE_NAME
-        filterExpression = "age >= :age"
-        expressionAttributeValues = utils.toAttributeValueMap(mapOf(":age" to age))
-      }
+      val query =
+          ScanRequest {
+            // TODO: 実装
+          }
       // 取得
       val response = ddb.scan(query)
       // 取得結果を出力
