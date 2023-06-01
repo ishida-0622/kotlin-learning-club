@@ -95,8 +95,15 @@ class App {
   }
 
   suspend fun addUser(user: User) {
-    // ユーザーを追加
-    utils.putItemInTable(TABLE_NAME, user)
+    // 型変換
+    val itemValues = utils.toAttributeValueMap(utils.toMap(user))
+    // テーブル名とitemを指定
+    val req = PutItemRequest {
+      tableName = TABLE_NAME
+      item = itemValues
+    }
+    // 追加
+    ddb_client.use { ddb -> ddb.putItem(req) }
   }
 
   suspend fun scanAll() {
@@ -121,12 +128,21 @@ class App {
     keys["id"] = id
     keys["name"] = name
 
-    // 取得
-    val response = utils.getIetmWithKey(TABLE_NAME, keys)
-    // 取得結果を出力
-    response?.forEach { mp ->
-      println("key = ${mp.key}")
-      println("value = ${mp.value}")
+    val keyToGet = utils.toAttributeValueMap(keys)
+    // テーブル名とキーを設定
+    val req = GetItemRequest {
+      key = keyToGet
+      tableName = TABLE_NAME
+    }
+
+    ddb_client.use { ddb ->
+      // 取得
+      val response = ddb.getItem(req)
+      // 取得結果を出力
+      response.item?.forEach { mp ->
+        println("key = ${mp.key}")
+        println("value = ${mp.value}")
+      }
     }
   }
 
