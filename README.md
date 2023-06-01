@@ -69,7 +69,7 @@ gradle buildZip
 
 ## サンプルコード
 
-石田が書いたサンプルコードが、https://github.com/ishida-0622/kotlin-leaning-club/tree/sample にあります。
+石田が書いたサンプルコードが、https://github.com/ishida-0622/kotlin-learning-club/tree/sample にあります。
 
 参考にするのは推奨しますが、コピペは推奨しません。分からないことは何も悪くないですが、分からないことを分からないままにするのはよくないです。不明点・疑問点は積極的に解消していきましょう。
 
