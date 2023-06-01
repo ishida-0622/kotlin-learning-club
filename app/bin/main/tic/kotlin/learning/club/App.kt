@@ -67,9 +67,6 @@ val TABLE_NAME = "kotlin-learning"
 val utils = Utils()
 
 class App {
-  // リージョンを指定してDynamoDB clientを作成
-  private val ddb_client = DynamoDbClient { region = REGION }
-
   suspend fun handler() {
     // ユーザーの情報を設定
     val id = UUID.randomUUID().toString()
@@ -95,12 +92,19 @@ class App {
   }
 
   suspend fun addUser(user: User) {
-    // ユーザーを追加
-    utils.putItemInTable(TABLE_NAME, user)
+    // 型変換
+    val itemValues = utils.toAttributeValueMap(utils.toMap(user))
+    // テーブル名とitemを指定
+    val req = PutItemRequest {
+      tableName = TABLE_NAME
+      item = itemValues
+    }
+    // 追加
+    DynamoDbClient { region = REGION }.use { ddb -> ddb.putItem(req) }
   }
 
   suspend fun scanAll() {
-    ddb_client.use { ddb ->
+    DynamoDbClient { region = REGION }.use { ddb ->
       // テーブル名を指定
       val request = ScanRequest { tableName = TABLE_NAME }
       // 全件取得
@@ -121,17 +125,26 @@ class App {
     keys["id"] = id
     keys["name"] = name
 
-    // 取得
-    val response = utils.getIetmWithKey(TABLE_NAME, keys)
-    // 取得結果を出力
-    response?.forEach { mp ->
-      println("key = ${mp.key}")
-      println("value = ${mp.value}")
+    val keyToGet = utils.toAttributeValueMap(keys)
+    // テーブル名とキーを設定
+    val req = GetItemRequest {
+      key = keyToGet
+      tableName = TABLE_NAME
+    }
+
+    DynamoDbClient { region = REGION }.use { ddb ->
+      // 取得
+      val response = ddb.getItem(req)
+      // 取得結果を出力
+      response.item?.forEach { mp ->
+        println("key = ${mp.key}")
+        println("value = ${mp.value}")
+      }
     }
   }
 
   suspend fun searchByAge(age: Int) {
-    ddb_client.use { ddb ->
+    DynamoDbClient { region = REGION }.use { ddb ->
       // テーブル名, 検索条件を指定
       val query = ScanRequest {
         tableName = TABLE_NAME

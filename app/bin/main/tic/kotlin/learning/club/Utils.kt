@@ -9,8 +9,6 @@ import aws.sdk.kotlin.services.lambda.*
 import kotlin.reflect.*
 import kotlin.reflect.full.*
 
-// https://docs.aws.amazon.com/ja_jp/sdk-for-kotlin/latest/developer-guide/kotlin_dynamodb_code_examples.html
-
 class Utils {
   /**
    * objectをMapに変換する
@@ -59,45 +57,5 @@ class Utils {
           it.key to resValue
         }
         .toMap()
-  }
-
-  /**
-   * キーで検索する
-   *
-   * @param tableNameVal テーブル名
-   *
-   * @param keys { キー名 : 値 } のMap
-   *
-   * @return 検索結果
-   */
-  suspend fun getIetmWithKey(
-      tableNameVal: String,
-      keys: Map<String, Any>
-  ): Map<String, AttributeValue>? {
-    val keyToGet = toAttributeValueMap(keys)
-    val req = GetItemRequest {
-      key = keyToGet
-      tableName = tableNameVal
-    }
-    DynamoDbClient { region = REGION }.use { ddb ->
-      val response = ddb.getItem(req)
-      return response.item
-    }
-  }
-
-  /**
-   * テーブルに追加する
-   *
-   * @param tableNameVal テーブル名
-   *
-   * @param values 追加するデータ. { foo : bar } 形式のdata class
-   */
-  suspend fun <T : Any> putItemInTable(tableNameVal: String, values: T) {
-    val itemValues = toAttributeValueMap(toMap(values))
-    val req = PutItemRequest {
-      tableName = tableNameVal
-      item = itemValues
-    }
-    DynamoDbClient { region = REGION }.use { ddb -> ddb.putItem(req) }
   }
 }
