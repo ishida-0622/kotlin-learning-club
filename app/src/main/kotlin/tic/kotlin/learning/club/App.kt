@@ -67,9 +67,6 @@ val TABLE_NAME = "kotlin-learning"
 val utils = Utils()
 
 class App {
-  // リージョンを指定してDynamoDB clientを作成
-  private val ddb_client = DynamoDbClient { region = REGION }
-
   suspend fun handler() {
     // ユーザーの情報を設定
     val id = UUID.randomUUID().toString()
@@ -103,11 +100,11 @@ class App {
       item = itemValues
     }
     // 追加
-    ddb_client.use { ddb -> ddb.putItem(req) }
+    DynamoDbClient { region = REGION }.use { ddb -> ddb.putItem(req) }
   }
 
   suspend fun scanAll() {
-    ddb_client.use { ddb ->
+    DynamoDbClient { region = REGION }.use { ddb ->
       // テーブル名を指定
       val request = ScanRequest { tableName = TABLE_NAME }
       // 全件取得
@@ -135,7 +132,7 @@ class App {
       tableName = TABLE_NAME
     }
 
-    ddb_client.use { ddb ->
+    DynamoDbClient { region = REGION }.use { ddb ->
       // 取得
       val response = ddb.getItem(req)
       // 取得結果を出力
@@ -147,7 +144,7 @@ class App {
   }
 
   suspend fun searchByAge(age: Int) {
-    ddb_client.use { ddb ->
+    DynamoDbClient { region = REGION }.use { ddb ->
       // テーブル名, 検索条件を指定
       val query = ScanRequest {
         tableName = TABLE_NAME
