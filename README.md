@@ -6,7 +6,7 @@ DynamoDB のテーブル構成は以下の通りです
 
 > tableName: kotlin-leaning<br>
 > id (primary key): String<br>
-> name (sort key): String<br>
+> name (省略可): String<br>
 > age: Int
 
 ### 1
@@ -25,15 +25,15 @@ age = 自分の年齢<br>
 
 ### 3
 
-id, name が 1 で生成した id, name のユーザーを検索して表示<br>
+id が 1 で生成した id のユーザーを検索して表示<br>
 メソッド名は searchByKey とします<br>
-なお、id, name は引数で受け取るようにしてください
+なお、id は引数で受け取るようにしてください
 
 ### 4
 
 age が 20 歳以上のユーザーを検索して表示<br>
 メソッド名は searchByAge とします<br>
-なお、年齢は引数で受け取るようにしてください
+なお、age は引数で受け取るようにしてください
 
 以上の 4 つのメソッドを App クラス内に作成し、App クラスの handler メソッド内で順番に呼び出してください
 
