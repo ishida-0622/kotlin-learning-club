@@ -20,8 +20,8 @@ import kotlin.reflect.full.*
 tableName: kotlin-learning
 
 id(primarykey): String
-name(sortkey): String
-age: Int
+name: String
+age(省略可): Int
 
 
 
@@ -83,7 +83,7 @@ class App {
     println("取得完了\n")
 
     println("id検索")
-    searchByKey(id, name)
+    searchByKey(id)
     println("検索完了\n")
 
     println("年齢で絞り込み")
@@ -119,11 +119,10 @@ class App {
     }
   }
 
-  suspend fun searchByKey(id: String, name: String) {
+  suspend fun searchByKey(id: String) {
     // idとnameをMapにセット
     val keys = mutableMapOf<String, Any>()
     keys["id"] = id
-    keys["name"] = name
 
     val keyToGet = utils.toAttributeValueMap(keys)
     // テーブル名とキーを設定
