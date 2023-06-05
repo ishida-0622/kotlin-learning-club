@@ -41,14 +41,14 @@ User型のデータをDynamoに入れる際の型変換にはtoMapとtoAttribute
   メソッド名はscanAllとします
 
 3
-  id, nameが1で生成したid, nameのユーザーを検索して表示
+  idが1で生成したidのユーザーを検索して表示
   メソッド名はsearchByKeyとします
-  なお、id, nameは引数で受け取るようにしてください
+  なお、idは引数で受け取るようにしてください
 
 4
   ageが20歳以上のユーザーを検索して表示
   メソッド名はsearchByAgeとします
-  なお、年齢は引数で受け取るようにしてください
+  なお、ageは引数で受け取るようにしてください
 
 以上の4つのメソッドをAppクラス内に作成し、Appクラスのhandlerメソッド内で順番に呼び出してください
 
@@ -147,7 +147,9 @@ class App {
       // テーブル名, 検索条件を指定
       val query = ScanRequest {
         tableName = TABLE_NAME
+        // 条件式を記述. :ageの部分は変数として解釈され, expressionAttributeValuesでセットした値が使用されます
         filterExpression = "age >= :age"
+        // :ageの値をセット
         expressionAttributeValues = utils.toAttributeValueMap(mapOf(":age" to age))
       }
       // 取得
