@@ -122,6 +122,7 @@ class App {
   suspend fun searchByKey(id: String, name: String) {
     // idとnameをMapにセット
     val keys = mutableMapOf<String, Any>()
+    keys["id"] = id
     // TODO: 実装
 
     val keyToGet = utils.toAttributeValueMap(keys)
