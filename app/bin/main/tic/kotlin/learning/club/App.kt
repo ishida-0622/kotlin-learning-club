@@ -75,19 +75,19 @@ class App {
     val user = User(id, name, age)
 
     println("ユーザーを追加")
-    // メソッド呼び出し
+    // TODO: メソッド呼び出し
     println("追加完了\n")
 
     println("全件取得")
-    // メソッド呼び出し
+    // TODO: メソッド呼び出し
     println("取得完了\n")
 
     println("id検索")
-    // メソッド呼び出し
+    // TODO: メソッド呼び出し
     println("検索完了\n")
 
     println("年齢で絞り込み")
-    // メソッド呼び出し
+    // TODO: メソッド呼び出し
     println("取得完了\n")
   }
 
@@ -108,7 +108,7 @@ class App {
       // テーブル名を指定
       val request = ScanRequest { tableName = TABLE_NAME }
       // 全件取得
-      val response = "TODO: 実装"
+      val response = TODO: 実装
       // 取得結果を出力
       response.items?.forEach { item ->
         item.forEach { mp ->
