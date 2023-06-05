@@ -58,7 +58,7 @@ User型のデータをDynamoに入れる際の型変換にはtoMapとtoAttribute
 data class User(val id: String, val name: String, val age: Int?)
 
 // AWSのリージョン
-val REGION = "ap-northeast-1"
+val REGION = "us-east-1"
 
 // テーブル名
 val TABLE_NAME = "kotlin-learning"
