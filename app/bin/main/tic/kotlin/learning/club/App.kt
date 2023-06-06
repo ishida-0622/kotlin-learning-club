@@ -9,6 +9,7 @@ import aws.sdk.kotlin.services.lambda.*
 import java.util.UUID
 import kotlin.reflect.*
 import kotlin.reflect.full.*
+import kotlinx.coroutines.runBlocking
 
 // https://sdk.amazonaws.com/kotlin/api/latest/dynamodb/index.html
 // https://docs.aws.amazon.com/ja_jp/sdk-for-kotlin/latest/developer-guide/kotlin_dynamodb_code_examples.html
@@ -58,7 +59,7 @@ User型のデータをDynamoに入れる際の型変換にはtoMapとtoAttribute
 data class User(val id: String, val name: String, val age: Int?)
 
 // AWSのリージョン
-val REGION = "us-east-1"
+val REGION = "ap-northeast-1"
 
 // テーブル名
 val TABLE_NAME = "kotlin-learning"
@@ -67,7 +68,7 @@ val TABLE_NAME = "kotlin-learning"
 val utils = Utils()
 
 class App {
-  suspend fun handler() {
+  fun handler() = runBlocking {
     // ユーザーの情報を設定
     val id = UUID.randomUUID().toString()
     val name = "ishida"
@@ -165,7 +166,7 @@ class App {
   }
 }
 
-suspend fun main() {
+fun main() {
   // handlerを起動
   val app = App()
   app.handler()
