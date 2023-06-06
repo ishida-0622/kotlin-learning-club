@@ -9,6 +9,7 @@ import aws.sdk.kotlin.services.lambda.*
 import java.util.UUID
 import kotlin.reflect.*
 import kotlin.reflect.full.*
+import kotlinx.coroutines.runBlocking
 
 // https://sdk.amazonaws.com/kotlin/api/latest/dynamodb/index.html
 // https://docs.aws.amazon.com/ja_jp/sdk-for-kotlin/latest/developer-guide/kotlin_dynamodb_code_examples.html
@@ -67,7 +68,7 @@ val TABLE_NAME = "kotlin-learning"
 val utils = Utils()
 
 class App {
-  suspend fun handler() {
+  fun handler(): Unit = runBlocking {
     // ユーザーの情報を設定
     val id = UUID.randomUUID().toString()
     val name = ""
@@ -162,7 +163,7 @@ class App {
   }
 }
 
-suspend fun main() {
+fun main() {
   // handlerを起動
   val app = App()
   app.handler()
