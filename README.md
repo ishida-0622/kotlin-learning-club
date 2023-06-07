@@ -35,7 +35,7 @@ age が 20 歳以上のユーザーを検索して表示<br>
 メソッド名は searchByAge とします<br>
 なお、age は引数で受け取るようにしてください
 
-以上の 4 つのメソッドを App クラス内に作成し、App クラスの handler メソッド内で順番に呼び出してください
+以上の 4 つのメソッドを App クラス内に作成し、App クラスの handleRequest メソッド内で順番に呼び出してください
 
 `Utils.kt` に、data class 型を Map 型に変換する関数と Map 型の value を DynamoDB 用の value に変換する関数があるので、適時使用してください
 
