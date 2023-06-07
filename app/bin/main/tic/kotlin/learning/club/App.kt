@@ -6,6 +6,8 @@ import aws.sdk.kotlin.services.dynamodb.model.*
 import aws.sdk.kotlin.services.dynamodb.paginators.*
 import aws.sdk.kotlin.services.dynamodb.waiters.*
 import aws.sdk.kotlin.services.lambda.*
+import com.amazonaws.services.lambda.runtime.Context
+import com.amazonaws.services.lambda.runtime.RequestHandler
 import java.util.UUID
 import kotlin.reflect.*
 import kotlin.reflect.full.*
@@ -51,7 +53,7 @@ User型のデータをDynamoに入れる際の型変換にはtoMapとtoAttribute
   メソッド名はsearchByAgeとします
   なお、年齢は引数で受け取るようにしてください
 
-以上の4つのメソッドをAppクラス内に作成し、Appクラスのhandlerメソッド内で順番に呼び出してください
+以上の4つのメソッドをAppクラス内に作成し、AppクラスのhandleRequestメソッド内で順番に呼び出してください
 
 */
 
@@ -67,10 +69,11 @@ val TABLE_NAME = "kotlin-learning"
 // インスタンス化
 val utils = Utils()
 
-class App {
-  fun handler(): Unit = runBlocking {
+class App : RequestHandler<Map<String, String>, Unit> {
+  override fun handleRequest(event: Map<String, String>?, context: Context?): Unit = runBlocking {
     // ユーザーの情報を設定
     val id = UUID.randomUUID().toString()
+    // TODO: 実装
     val name = ""
     val age = 0
     val user = User(id, name, age)
@@ -166,5 +169,5 @@ class App {
 fun main() {
   // handlerを起動
   val app = App()
-  app.handler()
+  app.handleRequest(null, null)
 }
